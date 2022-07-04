@@ -1,4 +1,10 @@
-import { MAX_NUMBER_LENGTH, MAX_OPER_LENGTH } from "./constants.js";
+import {
+  MAX_NUMBER_LENGTH,
+  MAX_OPER_LENGTH,
+  INVALID_LENGTH,
+  INVALID_OPER_LENGTH,
+  REQUIRED_DIGIT,
+} from "./constants.js";
 
 const calcValue = document.querySelector("#total");
 const calcDigit = document.querySelectorAll(".calculator");
@@ -23,29 +29,32 @@ const setNumber = (value, type) => {
   switch (type) {
     case "number":
       if (calculatorValue.numberCount >= MAX_NUMBER_LENGTH)
-        return alert(`숫자는 ${MAX_NUMBER_LENGTH}개가 최대에요`);
+        return alert(INVALID_LENGTH);
 
       calculatorValue.numberCount += 1;
       break;
     case "oper":
       if (calculatorValue.operCount >= MAX_OPER_LENGTH)
-        return alert(`${MAX_OPER_LENGTH + 1}개의 숫자에 대해서만 가능해요`);
+        return alert(INVALID_OPER_LENGTH);
+      if (calculatorValue.numberCount === 0) return alert(REQUIRED_DIGIT);
 
       calculatorValue.operCount += 1;
       calculatorValue.numberCount = 0;
       break;
     default:
-      alert("정확한 값을 입력해주세요");
       break;
   }
 
-  calculatorValue.value += value;
+  if (value === "X") calculatorValue.value += "*";
+  else calculatorValue.value += value;
   renderNumber(calculatorValue.value);
 };
 
 const setResult = () => {
   const resultValue = eval(calculatorValue.value);
-  renderNumber(resultValue);
+
+  if (calculatorValue.value === "") return renderNumber(0);
+  renderNumber(Math.floor(resultValue));
 };
 
 const handleClickBtn = (e) => {
