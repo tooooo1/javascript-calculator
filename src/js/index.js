@@ -5,7 +5,7 @@ import {
 } from "./constants.js";
 
 const calcValue = document.querySelector("#total");
-const calcDigit = document.querySelectorAll(".calculator");
+const calcDigit = document.querySelector(".calculator");
 const calculatorValue = {
   value: "",
   operatorCount: 0,
@@ -68,9 +68,7 @@ const handleClickBtn = (e) => {
 };
 
 const init = () => {
-  calcDigit.forEach((button) => {
-    button.addEventListener("click", handleClickBtn);
-  });
+  calcDigit.addEventListener("click", handleClickBtn);
   renderNumber(0);
 };
 
