@@ -8,10 +8,8 @@ const calculatorValue = {
   operator: "",
 };
 
-const renderNumber = (number) => {
-  const content = number === "" ? 0 : number;
-  calcValue.textContent = content;
-};
+const renderNumber = (number) =>
+  (calcValue.textContent = number === "" ? 0 : number);
 
 const reset = () => {
   calculatorValue.number = "";
@@ -48,6 +46,16 @@ const setNumber = (value) =>
     ? (calculatorValue.number += value)
     : (calculatorValue.lastNumber += value);
 
+const setOperator = (value) => {
+  if (value === OPERATORS.EQUAL) {
+    calculatorValue.number = calculator();
+    calculatorValue.operator = "";
+    calculatorValue.lastNumber = "";
+  } else {
+    calculatorValue.operator = value;
+  }
+};
+
 const checkMaxOperator = (value) => {
   if (calculatorValue.number === "")
     return alert(ERROR_MASSAGES.REQUIRED_DIGIT);
@@ -67,16 +75,6 @@ const checkMaxNumber = (value) => {
   }
 
   setNumber(value);
-};
-
-const setOperator = (value) => {
-  if (value === OPERATORS.EQUAL) {
-    calculatorValue.number = calculator();
-    calculatorValue.operator = "";
-    calculatorValue.lastNumber = "";
-  } else {
-    calculatorValue.operator = value;
-  }
 };
 
 const handler = (e) => {
