@@ -1,4 +1,4 @@
-import { INVALID_LENGTH, REQUIRED_DIGIT } from "../src/js/constants";
+import { ERROR_MASSAGES } from "../src/js/constants";
 
 const clickToDigit = (digit) => cy.get(".digit").contains(digit).click();
 const clickToOperator = (operator) =>
@@ -24,7 +24,7 @@ describe("Calculator", () => {
       // alert
       clickToOperator("/").then(() => {
         checkTotalText(0);
-        expect(alertStub).to.be.calledWith(REQUIRED_DIGIT);
+        expect(alertStub).to.be.calledWith(ERROR_MASSAGES.REQUIRED_DIGIT);
       });
     });
   });
@@ -45,7 +45,7 @@ describe("Calculator", () => {
       clickToDigit(0);
       clickToDigit(4).then(() => {
         checkTotalText(120);
-        expect(alertStub).to.be.calledWith(INVALID_LENGTH);
+        expect(alertStub).to.be.calledWith(ERROR_MASSAGES.INVALID_LENGTH);
       });
     });
   });
@@ -70,7 +70,7 @@ describe("Calculator", () => {
       clickToDigit(1);
       clickToDigit(4).then(() => {
         checkTotalText("123+321");
-        expect(alertStub).to.be.calledWith(INVALID_LENGTH);
+        expect(alertStub).to.be.calledWith(ERROR_MASSAGES.INVALID_LENGTH);
       });
     });
   });
